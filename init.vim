@@ -110,6 +110,9 @@ Plug 'wincent/terminus'
 Plug 'kyazdani42/nvim-web-devicons'
 call plug#end()
 
+
+let $COC_NO_PLUGINS = '1'
+
 " Nerdtree U C I
 nnoremap <silent> <F2> :NERDTreeToggle<ENTER>
 let NERDTreeMinimalUI=1
@@ -203,36 +206,36 @@ let g:coc_global_extensions = [
 	\ 'coc-vimlsp',
 	\ 'coc-yaml',
 	\ 'coc-yank']
-inoremap <silent><expr> <TAB>
-	\ pumvisible() ? "\<C-n>" :
-	\ <SID>check_back_space() ? "\<TAB>" :
-	\ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <silent><expr> <c-o> coc#refresh()
-function! Show_documentation()
-	call CocActionAsync('highlight')
-	if (index(['vim','help'], &filetype) >= 0)
-		execute 'h '.expand('<cword>')
-	else
-		call CocAction('doHover')
-	endif
-endfunction
-nnoremap <LEADER>h :call Show_documentation()<CR>
+" inoremap <silent><expr> <TAB>
+" 	\ pumvisible() ? "\<C-n>" :
+" 	\ <SID>check_back_space() ? "\<TAB>" :
+" 	\ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" function! s:check_back_space() abort
+" 	let col = col('.') - 1
+" 	return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+" inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <silent><expr> <c-o> coc#refresh()
+" function! Show_documentation()
+" 	call CocActionAsync('highlight')
+" 	if (index(['vim','help'], &filetype) >= 0)
+" 		execute 'h '.expand('<cword>')
+" 	else
+" 		call CocAction('doHover')
+" 	endif
+" endfunction
+" nnoremap <LEADER>h :call Show_documentation()<CR>
 " set runtimepath^=~/.config/nvim/coc-extensions/coc-flutter-tools/
 " let g:coc_node_args = ['--nolazy', '--inspect-brk=6045']
 " let $NVIM_COC_LOG_LEVEL = 'debug'
 " let $NVIM_COC_LOG_FILE = '/Users/david/Desktop/log.txt'
 
-nnoremap <silent><nowait> <LEADER>d :CocList diagnostics<cr>
-nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
-nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
-nnoremap <c-c> :CocCommand<CR>
+" nnoremap <silent><nowait> <LEADER>d :CocList diagnostics<cr>
+" nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
+" nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
+" nnoremap <c-c> :CocCommand<CR>
 " Text Objects
 xmap kf <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
