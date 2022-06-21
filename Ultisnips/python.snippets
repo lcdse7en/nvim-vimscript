@@ -1,0 +1,113 @@
+snippet st "print"
+print(${1})
+${2}
+endsnippet
+
+
+snippet main "if __name__ == '__main__':"
+if __name__ == '__main__':
+    ${0}
+endsnippet
+
+snippet nl "number to letter" b
+number_to_letter = vb.utils.get_column_letter(${1:number})
+$0
+endsnippet
+
+snippet ln "letter to number" b
+letter_to_number = vb.utils.column_index_from_string(${1:'letter'})
+$0
+endsnippet
+
+snippet wid "width" b
+ws.column_dimensions['${1:B}'].width = ${2:20}
+$0
+endsnippet
+
+snippet freeze "freeze_panes" b
+ws.freeze_panes = '${1:B2}'
+$0
+endsnippet
+
+snippet merge "merge_cells" b
+ws.merge_cells('$1:A1:B1')
+$0
+endsnippet
+
+snippet maxr "max_row" b
+maxr = ws.max_row
+$0
+endsnippet
+
+snippet maxl "max_column" b
+maxr = ws.max_column
+$0
+endsnippet
+
+snippet simhei "SimHei" b
+font_SimHei_notbold_10 = Font(
+        name='SimHei',
+        size=10,
+        bold=False,
+        italic=False,
+        vertAlign=None,
+        underline='none',
+        color='FF000000',
+    )
+$0
+endsnippet
+
+snippet font "Font" b
+ws.cell(row=${1:1}, column=${2:1}).font = ${3:font_SimHei_notbold_10}
+$0
+endsnippet
+
+snippet cc "Alignment_center_center" b
+alignment_center_center = Alignment(horizontal='center',
+                                    vertical='center',
+                                    text_rotation=0,
+                                    wrap_text=False,
+                                    shrink_to_fit=False,
+                                    indent=0)
+$0
+endsnippet
+
+snippet align "Alignment" b
+ws.cell(row=${1:1}, column=${2:1}).alignment = ${3:alignment_center_center}
+$0
+endsnippet
+
+snippet nf "number format" b
+ws.cell(row=${1:1}, column=${2:1}).number_format = '#,###.#0;-#,###.#0'
+$0
+endsnippet
+
+snippet cell "cell" b
+ws.cell(row=${1:row}, column=${2:column}).${3:alignment} = ${4:alignment_center_center}
+$0
+endsnippet
+
+snippet group "Group" b
+ws.column_dimensions.group('${1:A}', '${2:B}', hidden=${3:False})
+$0
+endsnippet
+
+snippet fill "PatternFill" b
+fill = PatternFill(fill_type='${1:solid}', fgColor=${2:'d8d3cd'})
+$0
+endsnippet
+
+snippet thick "bottom Thick" b
+border_bottom_thick = Border(
+			left=Side(border_style=None, color='FF000000'),
+            right=Side(border_style=None, color='FF000000'),
+            top=Side(border_style=None, color='FF000000'),
+            bottom=Side(border_style='thick', color=${1:'2F4F4F'})
+	)
+$0
+endsnippet
+
+snippet tabc "tabColor" b
+ws.sheet_properties.tabColor = '{0:06X}'.format(random.randint(0, 0xFFFFFF))
+$0
+endsnippet

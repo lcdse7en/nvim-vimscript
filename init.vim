@@ -1,377 +1,475 @@
-" 一般设置
-set nocompatible "关闭与vi的兼容模式
-set number "显示行号
-set relativenumber
-set clipboard=unnamed
-set wrap    "自动折行
-set showmatch    "显示匹配的括号
-set cursorline
-set wildmenu
+
+colorscheme gruvbox
+" colorscheme vegeta
+" colorscheme wombat256mod
+
+set encoding=utf-8                                              " utf-8编码
+set t_Co=256                                                    " 开启256色支持
+let &t_ut=''
 set autochdir
-set scrolloff=5        "距离顶部和底部3行"
-set encoding=utf-8  "编码
-set fenc=utf-8      "编码
-set list
-set listchars=tab:\|\ ,trail:▫
-set showcmd
-set fileencodings=utf-8
-set hlsearch        "搜索高亮
-exec "nohlsearch"
-set incsearch
-syntax on    "语法高亮
-set tabstop=4   "tab宽度
-set shiftwidth=4
+set exrc
+set secure
+syntax on
+filetype indent on
 filetype on
-set smarttab
-set backspace=indent,eol,start
-set fileformat=unix   "保存文件格式
-set splitbelow
-set cmdheight=2
-set completeopt=longest,menu
-set splitright
-set foldmethod=indent
+filetype plugin on
+let mapleader=" "                                               " 设置leader键为空格键
+set nocompatible
+" set fileencodings=ucs-bom,utf-8,gb2313,gb18030,gbk,cp936,latin1
+set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
+set termencoding=utf-8
+set ambiwidth=double
+set autowrite
+set matchtime=1
+set fileformats=unix,dos,mac
+set helplang=cn                                                 " 中文帮助文档
+set nomodeline
+set relativenumber                                              " 相对行号
+set number                                                      " 绝对行号
+"设置swp文件
+set noswapfile
+
+set viewoptions=cursor,folds,slash,unix
+set wrap                                                        " 自动换行
+set linebreak
+set showcmd                                                     " 显示输入信息
+set cursorline                                                  " 显示光标所在行
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+"set cursorcolumn                                                " 显示光标所在列
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+autocmd BufWritePre * :%s/\s\+$//e
+
+set wildmenu                                                    " 显示补全提示
+set hlsearch
+
+" 打开vim运行nohlsearch，取消高亮
+exec "nohlsearch"
+set shiftwidth=4                                                "自动缩进空白字符个数为4
+set ts=4                                                        " 设置tab键长度为四个空格
+set expandtab                                                   " 设置tab键替换为四个空格键
+
+let g:vim_markdown_folding_disabled = 1
+" 将文件中的tab键替换成空格
+"map <LEADER>    :retab!<CR>
+set incsearch                                                   " 一边输入一边高亮
+set ignorecase                                                  " 忽略大小写
+set smartcase                                                   " 智能大小写
+set laststatus=2                                                " 设置状态栏在倒数第2行
+
+
+
+" 自动缩进
+set autoindent
+
+set notimeout
+
+set foldmethod=syntax
 set foldlevel=99
-" 设置空格为leader键
-let mapleader=" "
-noremap <LEADER><LEADER> :nohlsearch<CR>
-set lazyredraw
-set visualbell
-silent !mkdir -p $HOME/.config/nvim/tmp/backup
-silent !mkdir -p $HOME/.config/nvim/tmp/undo
-"silent !mkdir -p $HOME/.config/nvim/tmp/sessions
-set backupdir=$HOME/.config/nvim/tmp/backup,.
-set directory=$HOME/.config/nvim/tmp/backup,.
-if has('persistent_undo')
-	set undofile
-	set undodir=$HOME/.config/nvim/tmp/undo,.
-endif
-set colorcolumn=100
+let g:indentLine_concealcursor = ''
+autocmd BufNewFile,BufRead *.md set nofoldenable
 
 
+"======================================== 设置状态栏格式 ========================================
+set mouse=a                                                     " 启用鼠标
+set backspace=indent,eol,start                                  " 退格键可以退到上一行
+set scrolloff=6                                                 " 光标行上下移动范围各缩小5行
+"set ruler
+"set transparency=11
+
+" 设置背景透明
+hi Normal ctermfg=252 ctermbg=none
+
+" 寻找下一搜索结果，并将其置于屏幕中心
 noremap = nzz
+" 寻找上一搜索结果，并将其置于屏幕中心
 noremap - Nzz
-nnoremap , :
-nnoremap Q :q<CR>
-nnoremap S :w<CR>
-imap jj <ESC>
-nnoremap <LEADER>rc :e $HOME/.config/nvim/init.vim<CR>
-noremap Y "+y
-inoremap ( ()<ESC>i
+" 取消高亮
+noremap <LEADER><CR> :nohlsearch<CR>
+map s <nop>
+" 保存
+map S :w<CR>
+" 退出
+map Q :q<CR>
+" 右分屏，聚焦右窗口
+map sl :set splitright<CR>:vsplit<CR>:term<CR>
+" 左分屏，聚焦左窗口
+map sh :set nosplitright<CR>:vsplit<CR>
+" 上分屏，聚焦上窗口
+map sk :set nosplitbelow<CR>:split<CR>
+" 下分屏，聚焦下窗口
+map sj :set splitbelow<CR>:split<CR>
+" 光标移至右窗口
+map <LEADER>l <C-w>l
+" 光标移至上窗口
+map <LEADER>k <C-w>k
+" 光标移至下窗口
+map <LEADER>j <C-w>j
+" 光标移至左窗口
+map <LEADER>h <C-w>h
 
-" vim-plug插件管理
+" 当前窗口移至右边
+map <LEADER>L <C-w>L
+" 当前窗口移至上边
+map <LEADER>K <C-w>K
+" 当前窗口移至下边
+map <LEADER>J <C-w>J
+" 当前窗口移至左边
+map <LEADER>H <C-w>H
+
+
+" 窗口上移
+map <up> :res +5<CR>
+" 窗口下移
+map <down> :res -5<CR>
+" 窗口左移
+map <left> :vertical resize-5<CR>
+" 窗口右移
+map <right> :vertical resize+5<CR>
+" 新建标签页
+map tn :tabe<CR>
+" 前一标签页
+map t- :-tabnext<CR>
+" 后一标签页
+map t= :+tabnext<CR>
+
+
+" find and replace
+noremap \s :%s//g<left><left>
+
+
+" 重新加载vim配置文件
+" map rc :source $MYVIMRC<CR>
+map rc :source ~/.config/nvim/init.vim<CR>
+
+
+
+
+" 寻找两个相等的单词
+map <LEADER>fd /\(\<\w\+\>\)\_s*\1
+" 替换占空符
+map <LEADER><LEADER> <ESC>/<CR>:nohlsearch<CR>c4l
+" 选
+nmap <C-a> ggVG
+" 打开我的vimrc
+map <LEADER>rc :e ~/.config/nvim/init.vim<CR>
+" 复制到系统剪切板
+map +y "+y
+" 从系统剪切板粘贴
+map +p "+p
+" 插入模式下jj映射为<Esc>
+inoremap jj <Esc>
+"进入命令模式
+nmap , :
+"撤销
+nmap u :u<Enter>
+map tx :r !figlet
+nmap <CR> o<Esc>
+" nmap <LEADER>t :set splitright<CR>:vsplit<CR>:term<CR>
+nmap <LEADER>s :set splitright<CR>:vsplit<CR>:term<CR>
+"nmap <LEADER>ft :termNew<CR>
+autocmd filetype python nnoremap <buffer> <LEADER>i :set splitright<CR>:vsplit<CR>:term<CR>iipython<CR>
+autocmd filetype tex noremap <buffer> <LEADER>i :!python3 ~/scripts/pdf2img.py -i %<.pdf -f %:h -o %<<CR>
+
+" 关闭nvim保存编辑记录
+silent !mkdir -p ~/.config/nvim/tmp/backup
+silent !mkdir -p ~/.config/nvim/tmp/undo
+set backupdir=~/.config/nvim/tmp/backup,.
+set directory=~/.config/nvim/tmp/backup,.
+if has('persistent_undo')
+    set undofile
+    set undodir=~/.config/nvim/tmp/undo,.
+endif
+
+" Cursor shape
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" 显示tab键和空格键
+set list
+set listchars=tab:▸\ ,trail:▫
+
+map J 5j
+map K 5k
+map H 5h
+map L 5l
+
+" syntax sync minlines=50
+
+function! MyStatusLine()
+  return s:GetPaste()
+        \. "%4*%{MyStatusGit()}%*"
+        \. "%5*%{MyStatusGitChanges()}%* %{MyStatusCoc()} "
+        \. "%6*%{get(b:, 'coc_current_function', '')}%*"
+        \. " %f %{MyStatusModifySymbol()}"
+        \. " %{MyStatusReadonly()}"
+        \. "%=%-{&ft} %l,%c %P "
+"%{&fenc}
+endfunction
+
+function! s:IsTempFile()
+  if !empty(&buftype) | return 1 | endif
+  if &previewwindow | return 1 | endif
+  let filename = expand('%:p')
+  if filename =~# '^/tmp' | return 1 | endif
+  if filename =~# '^fugitive:' | return 1 | endif
+  return 0
+endfunction
+
+function! s:GetPaste()
+  if !&paste | return '' |endif
+  return "%#MyStatusPaste# paste %*"
+endfunction
+
+function! MyStatusReadonly()
+  if !&readonly | return '' |endif
+  return "  "
+endfunction
+
+function! MyStatusCoc()
+  if get(g:, 'did_coc_loaded', 0)
+    return coc#status()
+  endif
+  return ''
+endfunction
+
+function! MyStatusModifySymbol()
+  return &modified ? '⚡' : ''
+endfunction
+
+function! MyStatusGitChanges() abort
+  if s:IsTempFile() | return '' | endif
+  return get(b:, 'coc_git_status', '')
+endfunction
+
+function! MyStatusGit(...) abort
+  let status = get(g:, 'coc_git_status', '')
+  return empty(status) ? '' : '  '.status.' '
+endfunction
+
+function! SetStatusLine()
+  if &previewwindow | return | endif
+  if s:IsTempFile() | return | endif
+  setl statusline=%!MyStatusLine()
+  hi User6         guifg=#fe8019 guibg=#282828 gui=none
+  hi User3         guifg=#e03131 guibg=#111111    gui=none
+  hi MyStatusPaste guifg=#F8F8F0 guibg=#FF5F00 gui=none
+  hi MyStatusPaste ctermfg=202   ctermbg=16    cterm=none
+  hi User4 guifg=#f8f8ff guibg=#000000
+  hi User5 guifg=#f8f9fa guibg=#343a40
+endfunction
+
+augroup statusline
+  autocmd!
+  autocmd BufEnter,BufNewFile,BufReadPost,ShellCmdPost,BufWritePost * call SetStatusLine()
+  autocmd FileChangedShellPost,ColorScheme * call SetStatusLine()
+augroup end
+
+
+" ===
+" === Terminal Behaviors
+" ===
+let g:neoterm_autoscroll = 1
+autocmd TermOpen term://* startinsert
+tnoremap <C-N> <C-\><C-N>
+tnoremap <C-O> <C-\><C-N><C-O>
+let g:terminal_color_0  = '#000000'
+let g:terminal_color_1  = '#FF5555'
+let g:terminal_color_2  = '#50FA7B'
+let g:terminal_color_3  = '#F1FA8C'
+let g:terminal_color_4  = '#BD93F9'
+let g:terminal_color_5  = '#FF79C6'
+let g:terminal_color_6  = '#8BE9FD'
+let g:terminal_color_7  = '#BFBFBF'
+let g:terminal_color_8  = '#4D4D4D'
+let g:terminal_color_9  = '#FF6E67'
+let g:terminal_color_10 = '#5AF78E'
+let g:terminal_color_11 = '#F4F99D'
+let g:terminal_color_12 = '#CAA9FA'
+let g:terminal_color_13 = '#FF92D0'
+let g:terminal_color_14 = '#9AEDFE'
+
+highlight multiple_cursors_cursor term=reverse cterm=reverse gui=reverse
+highlight link multiple_cursors_visual Visual
+
+let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+let g:instant_markdown_autostart = 1
+
+
+augroup filetype_tex
+    autocmd!
+    autocmd filetype tex nnoremap <leader>bd:!buildchinesepdf.sh %<cr><cr>
+    autocmd filetype tex nnoremap <leader>bb:!booklatex.sh %<cr><cr>
+    autocmd filetype tex nnoremap <leader>pd:!start_zathura.sh %<cr><cr>
+    autocmd FileType tex setlocal splitright
+
+
+
+
+augroup END
+
+
+" =============================================== 插件配置 ===============================================
 call plug#begin('~/.config/nvim/plugged')
-Plug 'theniceboy/eleline.vim', { 'branch': 'no-scrollbar' }
+" Status line
+" Plug 'theniceboy/eleline.vim'
+" Plug 'ojroques/vim-scrollstatus'
 
+" General Highlighter
+Plug 'RRethy/vim-illuminate'
+
+" Translation
+Plug 'voldikss/vim-translator'
+
+
+Plug 'luochen1990/rainbow'
+Plug 'mg979/vim-xtabline'
+
+" Taglist
+Plug 'liuchengxu/vista.vim'
+
+
+" Pretty Dress
+Plug 'theniceboy/nvim-deus'
+
+" Autoformat
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+
+" 启动页面
+Plug 'mhinz/vim-startify'
+Plug 'jiangmiao/auto-pairs'
+Plug '907th/vim-auto-save'
+
+"airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+"Icons
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"文件树
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+
+" Plug 'tmhedberg/SimpylFold'
+
+"Markdown
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'suan/vim-instant-markdown'
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'dkarter/bullets.vim'
+" Plug 'ferrine/md-img-paste.vim'
+" Plug 'instant-markdown/vim-instant-markdown'
+
+"coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'xuhdev/vim-latex-live-preview', {'for':'tex'}
+Plug 'xuhdev/SingleCompile'
+Plug 'jiangmiao/auto-pairs'
+"
+" ------------------------- surround & wildfire.vim --------------------------
+Plug 'tpope/vim-surround'
+Plug 'gcmt/wildfire.vim'
+" ------------------------------------------------------------------------------
+
+" 多光标操作
+Plug 'terryma/vim-multiple-cursors'
+
+" ------------------ snippets ------------------
+Plug 'SirVer/ultisnips'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+" Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+
+
+"Plug 'preservim/nerdcommenter'
+"注释
+Plug 'tomtom/tcomment_vim'
+
+Plug 'majutsushi/tagbar'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" Plug 'gko/vim-coloresque'
+
+Plug 'rking/ag.vim'
+
+Plug 'mileszs/ack.vim'
+"Plug 'davidhalter/jedi-vim'
+" 浮动窗口
+Plug 'voldikss/vim-floaterm'
+" emmet
+Plug 'mattn/emmet-vim'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+"Latex
+Plug 'lervag/vimtex'
+Plug 'neoclide/coc-vimtex'
+" Plug 'kevinhwang91/rnvimr'
+Plug 'pechorin/any-jump.vim'
+
+" Git
+" Plug 'theniceboy/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
+" Plug 'fszymanski/fzf-gitignore', { 'do': ':UpdateRemotePlugins' }
+" Plug 'mhinz/vim-signify'
+" Plug 'airblade/vim-gitgutter'
+" Plug 'cohama/agit.vim'
+Plug 'kdheepak/lazygit.nvim'
+
+
 
 " HTML, CSS, JavaScript, Typescript, PHP, JSON, etc.
+Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
 Plug 'neoclide/jsonc.vim'
 Plug 'othree/html5.vim'
 Plug 'alvan/vim-closetag'
 
-" Other filetypes
-Plug 'wlangstroth/vim-racket'
-
-
-
-Plug 'junegunn/vim-plug'
-Plug 'voldikss/vim-translator'
-Plug 'tpope/vim-surround'
-Plug 'gcmt/wildfire.vim'
-Plug 'mg979/vim-visual-multi'
-
 " Python
+" Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
-Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 "Plug 'vim-scripts/indentpython.vim', { 'for' :['python', 'vim-plug'] }
 "Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
-"Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
+Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 
-" Markdown
-Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
-Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
-Plug 'dkarter/bullets.vim'
 
-" coc
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Yggdroot/indentLine'
+" Go
+Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
+" vimwiki
+Plug 'vimwiki/vimwiki'
+Plug 'mattn/calendar-vim'
 
-" 注释插件 gcc
-Plug 'tomtom/tcomment_vim' " in <space>cn to comment a line
+Plug 'morhetz/gruvbox'
+Plug 'junegunn/goyo.vim'
 
-" Plug 'jiangmiao/auto-pairs'
-" Plug 'ferranpm/vim-autopairs'
+" Bookmarks
+Plug 'kshenoy/vim-signature'
 
-" Other visual enhancement
-Plug 'luochen1990/rainbow'
-Plug 'mg979/vim-xtabline'
-Plug 'ryanoasis/vim-devicons'
-Plug 'wincent/terminus'
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kien/rainbow_parentheses.vim'
+
+" Taglist
+Plug 'liuchengxu/vista.vim'
+
+" Emoji
+Plug 'junegunn/vader.vim'
+Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-github-dashboard'
+
 call plug#end()
 
 
-let $COC_NO_PLUGINS = '1'
-
-" Nerdtree U C I
-nnoremap <silent> <F2> :NERDTreeToggle<ENTER>
-let NERDTreeMinimalUI=1
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-" 启用标签栏
-let g:airline#extensions#tabline#enabled = 1
-" 支持图标字体
-let g:airline_powerline_fonts = 1
-" 设置状态栏主题
-let g:airline_theme='night_owl'
-" 设置主题
-set termguicolors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-syntax enable
-
-" ==================== eleline.vim ====================
-let g:airline_powerline_fonts = 0
 
 
-" ==================== rainbow ====================
-let g:rainbow_active = 1
+source /home/se7en/.config/nvim/cursor.vim
 
-" ==================== autopairs ====================
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutToggle = '<C-p>'
-let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
-
-
-" ==================== Markdown Settings ====================
-" Snippets
-source $HOME/.config/nvim/md-snippets.vim
-" auto spell
-autocmd BufRead,BufNewFile *.md setlocal spell
-
-
-
-" ==================== closetag ====================
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.md'
-let g:closetag_filetypes = 'html,xhtml,phtml,*.md'
-let g:closetag_shortcut = '>'
-
-" ==================== xtabline ====================
-let g:xtabline_settings = {}
-let g:xtabline_settings.enable_mappings = 0
-let g:xtabline_settings.tabline_modes = ['tabs', 'buffers']
-let g:xtabline_settings.enable_persistance = 0
-let g:xtabline_settings.last_open_first = 1
-noremap to :XTabCycleMode<CR>
-noremap \p :echo expand('%:p')<CR>
-
-
-
-" ==================== vim-table-mode ====================
-noremap <LEADER>tm :TableModeToggle<CR>
-"let g:table_mode_disable_mappings = 1
-let g:table_mode_cell_text_object_i_map = 'k<Bar>'
-
-
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '<M-b>'
-
-
-" ==================== coc.nvim ====================
-let g:coc_global_extensions = [
-	\ 'coc-css',
-	\ 'coc-diagnostic',
-	\ 'coc-docker',
-	\ 'coc-eslint',
-	\ 'coc-explorer',
-	\ 'coc-flutter-tools',
-	\ 'coc-gitignore',
-	\ 'coc-html',
-	\ 'coc-import-cost',
-	\ 'coc-java',
-	\ 'coc-jest',
-	\ 'coc-json',
-	\ 'coc-lists',
-	\ 'coc-omnisharp',
-	\ 'coc-prettier',
-	\ 'coc-prisma',
-	\ 'coc-snippets',
-	\ 'coc-sourcekit',
-	\ 'coc-stylelint',
-	\ 'coc-syntax',
-	\ 'coc-tasks',
-	\ 'coc-translator',
-	\ 'coc-tsserver',
-	\ 'coc-vetur',
-	\ 'coc-vimlsp',
-	\ 'coc-yaml',
-	\ 'coc-yank']
-" inoremap <silent><expr> <TAB>
-" 	\ pumvisible() ? "\<C-n>" :
-" 	\ <SID>check_back_space() ? "\<TAB>" :
-" 	\ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-" function! s:check_back_space() abort
-" 	let col = col('.') - 1
-" 	return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
-" inoremap <silent><expr> <c-space> coc#refresh()
-" inoremap <silent><expr> <c-o> coc#refresh()
-" function! Show_documentation()
-" 	call CocActionAsync('highlight')
-" 	if (index(['vim','help'], &filetype) >= 0)
-" 		execute 'h '.expand('<cword>')
-" 	else
-" 		call CocAction('doHover')
-" 	endif
-" endfunction
-" nnoremap <LEADER>h :call Show_documentation()<CR>
-" set runtimepath^=~/.config/nvim/coc-extensions/coc-flutter-tools/
-" let g:coc_node_args = ['--nolazy', '--inspect-brk=6045']
-" let $NVIM_COC_LOG_LEVEL = 'debug'
-" let $NVIM_COC_LOG_FILE = '/Users/david/Desktop/log.txt'
-
-" nnoremap <silent><nowait> <LEADER>d :CocList diagnostics<cr>
-" nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
-" nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
-" nnoremap <c-c> :CocCommand<CR>
-" Text Objects
-xmap kf <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap kf <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-xmap kc <Plug>(coc-classobj-i)
-omap kc <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-" Useful commands
-nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gD :tab sp<CR><Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-nmap tt :CocCommand explorer<CR>
-" coc-translator
-nmap ts <Plug>(coc-translator-p)
-" Remap for do codeAction of selected region
-function! s:cocActionsOpenFromSelected(type) abort
-  execute 'CocCommand actions.open ' . a:type
-endfunction
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>aw  <Plug>(coc-codeaction-selected)w
-" coctodolist
-" nnoremap <leader>tn :CocCommand todolist.create<CR>
-" nnoremap <leader>tl :CocList todolist<CR>
-" nnoremap <leader>tu :CocCommand todolist.download<CR>:CocCommand todolist.upload<CR>
-" coc-tasks
-noremap <silent> <leader>ts :CocList tasks<CR>
-" coc-snippets
-imap <C-l> <Plug>(coc-snippets-expand)
-vmap <C-e> <Plug>(coc-snippets-select)
-let g:coc_snippet_next = '<c-e>'
-let g:coc_snippet_prev = '<c-n>'
-imap <C-e> <Plug>(coc-snippets-expand-jump)
-autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
-
-
-
-
-" 自动命令
-" if executable("python")
-" 	autocmd BufRead,BufNewFile *.py noremap <F5> :% w !python -w<Enter>
-" else
-" 	autocmd BufRead,BufNewFile *.py noremap <F5> :echo "you need to install python"
-" endif
-
-
-
-
-" Compile function
-" noremap r :call CompileRunGcc()<CR>
-noremap <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
-		set splitbelow
-		:sp
-		:res -5
-		term gcc % -o %< && time ./%<
-	elseif &filetype == 'cpp'
-		set splitbelow
-		exec "!g++ -std=c++11 % -Wall -o %<"
-		:sp
-		:res -15
-		:term ./%<
-	elseif &filetype == 'cs'
-		set splitbelow
-		silent! exec "!mcs %"
-		:sp
-		:res -5
-		:term mono %<.exe
-	elseif &filetype == 'java'
-		set splitbelow
-		:sp
-		:res -5
-		term javac % && time java %<
-	elseif &filetype == 'sh'
-		:!time bash %
-	elseif &filetype == 'python'
-		set splitbelow
-		:sp
-		:term python3 %
-	elseif &filetype == 'html'
-		silent! exec "!".g:mkdp_browser." % &"
-	elseif &filetype == 'markdown'
-		exec "InstantMarkdownPreview"
-	elseif &filetype == 'tex'
-		silent! exec "VimtexStop"
-		silent! exec "VimtexCompile"
-	elseif &filetype == 'dart'
-		exec "CocCommand flutter.run -d ".g:flutter_default_device." ".g:flutter_run_args
-		silent! exec "CocCommand flutter.dev.openDevLog"
-	elseif &filetype == 'javascript'
-		set splitbelow
-		:sp
-		:term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
-	elseif &filetype == 'racket'
-		set splitbelow
-		:sp
-		:res -5
-		term racket %
-	elseif &filetype == 'go'
-		set splitbelow
-		:sp
-		:term go run .
-	endif
-endfunc
-
-
-
-
-
-
-
-" 保存文件时，删除所以的空白
-autocmd BufWritePre * :%s/\s\+$//e
-
-" 记录文件上次打开的位置
-if has("autocmd")
-  augroup redhat
-  autocmd!
-  " In text files, always limit the width of text to 78 characters
-  " autocmd BufRead *.txt set tw=78
-  " When editing a file, always jump to the last cursor position
-  autocmd BufReadPost *
-  \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-  \   exe "normal! g'\"" |
-  \ endif
-  " don't write swapfile on most commonly used directories for NFS mounts or USB sticks
-  autocmd BufNewFile,BufReadPre /media/*,/run/media/*,/mnt/* set directory=~/tmp,/var/tmp,/tmp
-  " start with spec file template
-  autocmd BufNewFile *.spec 0r /usr/share/vim/vimfiles/template.spec
-  augroup END
-endif
-
+" autocmd BufRead,BufNewFile *.md setlocal spell

@@ -1,0 +1,353 @@
+# snip
+snippet documentclass "documentclass" b
+\documentclass[a4paper]{ctexart}    %ctexart, article
+\usepackage[margin=1cm]{geometry}
+\usepackage{graphicx} % 插图
+\usepackage{subfigure} % 子图包
+\usepackage{amsmath, mathrsfs, amsfonts}
+\usepackage{amssymb} % 更多公式符号
+\usepackage{physics} % 公式输入便捷命令
+\usepackage{hyperref} % 超链接
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan
+}
+\usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+%\usepackage{minted}
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usepackage{array}
+\usepackage{booktabs} % 调整表格线与上下内容的间隔
+
+
+\begin{document}
+$0
+
+
+\end{document}
+endsnippet
+
+
+snippet usepackage "use usepackage" b
+\usepackage{${1:minted}}
+$0
+endsnippet
+
+
+snippet minted "use minted" b
+\begin{minted}[mathescape,
+               linenos,
+               numbersep=5pt,
+               gobble=0,
+               frame=lines,
+               framesep=2mm]{${1:tex}}
+$0
+\end{minted}
+endsnippet
+
+snippet tcolorbox "use tcolorbox" bi
+\begin{tcolorbox}[
+         colback=red!5!white,
+         colframe=teal,
+         title=\textbf{${1:My Heading}}
+    ]
+$2
+\end{tcolorbox}
+endsnippet
+
+
+# 分数
+snippet frac "use frac" b
+\dfrac{${1:分子}}{${2:分母}}
+$0
+endsnippet
+
+# 超链接
+snippet href "href link" b
+\href{${1:https://www.baidu.com}}{${2:netname}}
+$0
+endsnippet
+
+snippet cha "Chapter" b
+\chapter{${1:Chapter Name}}
+$0
+endsnippet
+
+snippet sec "Section" b
+\section{${1:Section Name}}
+$0
+endsnippet
+
+snippet ssec "Sub Section" b
+\subsection{${1:Section Name}}
+$0
+endsnippet
+
+snippet beg "Begin" b
+\begin{$1}
+$2
+\end{$1}
+$0
+endsnippet
+
+snippet enu "Enumerate" b
+\begin{enumerate}
+    \item $1
+    \item $2
+    \item $3
+\end{enumerate}
+endsnippet
+
+snippet item "Itemize" b
+\begin{itemize}
+    \item $0
+\end{itemize}
+endsnippet
+
+snippet desc "Description" b
+\begin{description}
+    \item[$1] $0
+\end{description}
+endsnippet
+
+snippet => "implies" Ai
+\implies
+endsnippet
+
+priority 100
+snippet ... "ldots" iA
+\ldots
+endsnippet
+
+snippet ali "Align" bA
+\begin{align*}
+    ${1:${VISUAL}}
+\end{align*}
+endsnippet
+
+snippet table "Table environment" b
+\begin{table}[htpb]
+    \centering
+    \caption{${1:caption}}
+    \label{tab:${2:label}}
+    \begin{tabular}{${3:c}}
+	\hline
+    $0${3/((?<=.)c|l|r)|./(?1: & )/g} \\\
+	\hline
+    \end{tabular}
+\end{table}
+endsnippet
+
+# \usepackage{booktabs}  引入三线表宏包
+snippet three "Three-line table" b
+\begin{table}[htbp]
+	\centering
+	\caption{$1}
+	\begin{tabular}{${2:c}}
+		\toprule
+		$3 \\\
+		\midrule
+		$4 \\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+$0
+endsnippet
+
+snippet fig "Figure environment" b
+\begin{figure}[${1:htpb}]
+    \centering
+    ${2:\includegraphics[width=0.8\textwidth]{$3}}
+    \caption{${4:$3}}
+    \label{fig:${5:${3/\W+/-/g}}}
+\end{figure}
+endsnippet
+
+snippet lim "limit" w
+\lim_{${1:n} \to ${2:\infty}}
+endsnippet
+
+snippet mulr "Multirow" b
+\multirow{${1:lines}}{${2:*}}{${3:text}}
+endsnippet
+
+snippet mulc "Multicolumn" b
+\multicolumn{${1:2}}{${2:c}}{${3:value}}
+$0
+endsnippet
+
+snippet tabular "tabular" b
+\begin{tabular}{${1:c r @{.} l}}
+\multicolumn{2}{c}{Value}
+$0
+\end{tabular}
+
+endsnippet
+
+snippet tc "textcolor" b
+\textcolor{${1:red}{$2}}
+$0
+endsnippet
+
+snippet ul "underline" b
+\underline{$1}
+$0
+endsnippet
+
+snippet ti "textit" b
+\textit{${1:textit}}
+$0
+endsnippet
+
+snippet tt "texttt" b
+\texttt{${1:texttt}}
+$0
+endsnippet
+
+snippet url "url" b
+\url{${1:https://www.baidu.com}}
+$0
+endsnippet
+
+
+snippet math "$ $" b
+$ $1 $
+$0
+endsnippet
+
+
+snippet hw "korea font" b
+{\hanwen ${1:hanwen}}
+$0
+endsnippet
+
+snippet q "quad" b
+\quad $1
+endsnippet
+
+snippet mid "\mid \mid"
+	\\mid ${1} \\mid ${0}
+endsnippet
+
+snippet srt "\sqrt{}"
+	\\sqrt{${1}} ${0}
+endsnippet
+
+snippet tc "texcolor" b
+\texcolor{${1:blue}}{${2:text}}
+$0
+endsnippet
+
+snippet mydoc "documentclass" b
+\documentclass[10pt,a4paper]{ctexart} %book,article,report,letter
+\usepackage{xeCJK}
+\usepackage[left=0.5cm,right=0.5cm,top=1cm,bottom=0.5cm]{geometry}
+\usepackage{graphicx} %插入图片
+\usepackage{multirow}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{color, xcolor}
+\definecolor{LightGray}{gray}{0.9}
+\usepackage{enumitem}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{ulem}
+\usepackage{pifont}
+\usepackage{minted}
+\usemintedstyle{lovelace}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usepackage{tkz-base,tkz-euclide}
+\setlist{nosep}
+
+%字体加粗并作为紫色
+\newcommand\lcd[1]{\textbf{\textcolor{violet}{#1}}}
+
+\pagestyle{empty}
+
+%renewcommand
+\makeatletter
+\renewcommand*\maketitle{
+    \begin{center}% 居中标题
+        \vskip 4em   %标题下面只有1em的缩进或margin
+        \bfseries % 默认粗体
+        {\LARGE \@title \par} % LARGE字号
+        \vskip 2em   %标题下面只有1em的缩进或margin
+        {\global\let\author\@ Se7en}\\
+        \vskip 1em   %标题下面只有1em的缩进或margin
+        {\global\let\date\@ \today}
+        \vskip 2em   %标题下面只有1em的缩进或margin
+        \includegraphics[width=0.8\textwidth]{${1:../images/001.jpg}}
+        \thispagestyle{empty} %  不设置页面样式
+    \end{center}
+  \setcounter{footnote}{0}
+}
+
+%ctexset
+\ctexset{
+    section = {
+        titleformat = \zihao{-3} \sffamily \heiti \raggedright,
+        name = {第,节:},
+        number = \chinese{section},
+        beforeskip = 1.0ex plus 0.2ex minus .2ex,
+        afterskip = 1.0ex plus 0.2ex minus .2ex,
+        aftername = \hspace{0pt}
+
+    },
+    subsection = {
+        titleformat = \zihao{4} \sffamily \kaishu \raggedright,
+        name = {,、},
+        number = \arabic{subsection},
+        beforeskip = 1.0ex plus 0.2ex minus .2ex,
+        afterskip = 1.0ex plus 0.2ex minus .2ex,
+        aftername = \hspace{0pt}
+
+    }
+}
+
+\title{${2:税法}}
+% \author{Se7en}
+% \date{\today}
+
+\begin{document}
+\makeatother
+\maketitle
+
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+
+
+\section{${3:第一章}}
+$0
+
+
+
+\end{document}
+endsnippet
+
+snippet lcd "lcd" b
+\lcd{${1:text}}$0
+endsnippet
+
+
+snippet mymin "minted" b
+\begin{minted}[linenos,numbersep=5pt,gobble=2,bgcolor=LightGray,framesep=2mm,baselinestretch=1.2]{${1:tex}}
+${2:import pandas as pd}
+\end{minted}
+$0
+endsnippet
+
+snippet mymi "minipage" b
+\begin{minipage}[t][][${1:t/b}]{.6\textwidth}
+$2
+\end{minipage}
+$0
+endsnippet
+
